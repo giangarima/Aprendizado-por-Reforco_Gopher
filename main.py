@@ -22,8 +22,8 @@ NUM_OCULTOS = 16
 NUM_ACOES = 8
 NUM_EPISODIOS_BASELINE = 20
 
-TAXA_MUTACAO = 0.10
-INTENSIDADE_MUTACAO = 0.20
+TAXA_MUTACAO = 0.01
+INTENSIDADE_MUTACAO = 0.05
 NUM_ELITE = 2
 
 
@@ -37,7 +37,6 @@ def criar_ambiente(render_mode=None):
 
 class Agente:
     def __init__(self):
-        # Cada indivíduo começa com parâmetros diferentes.
         self.W1 = np.random.randn(NUM_ENTRADAS, NUM_OCULTOS)
         self.b1 = np.random.randn(NUM_OCULTOS)
         self.W2 = np.random.randn(NUM_OCULTOS, NUM_ACOES)
@@ -45,13 +44,11 @@ class Agente:
         self.fitness = 0.0
 
     def agir(self, estado):
-        # RAM: valores inteiros entre 0 e 255.
         estado = estado.astype(np.float32) / 255.0
 
         oculto = np.tanh(estado @ self.W1 + self.b1)
         saida = oculto @ self.W2 + self.b2
 
-        # A maior saída define a ação escolhida.
         return int(np.argmax(saida))
 
 
